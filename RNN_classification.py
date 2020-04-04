@@ -69,7 +69,7 @@ class RNN(nn.Module):
         # h_n shape (n_layers, batch, hidden_size)
         # h_c shape (n_layers, batch, hidden_size)
         r_out, (h_n, h_c) = self.rnn(x, None)   # None represents zero initial hidden state
-        print(r_out.shape)
+        # r_out.shape, (1, 28 (time step), 64)
         # choose r_out at the last time step
         out = self.out(r_out[:, -1, :])
         return out
@@ -86,7 +86,7 @@ for epoch in range(EPOCH):
     for step, (b_x, b_y) in enumerate(train_loader):        # gives batch data
         # if epoch == 0:
         #     print(b_x.shape)   #(1, 1, 28, 28)
-        b_x = b_x.view(-1, 28, 28)              # reshape x to (batch, time_step, input_size)
+        b_x = b_x.view(-1, 28, 28)              # reshape x to (batch, time_step, input_size, time_step is automatically adjusted)
         # if epoch == 0:
         #     print(b_x.shape)   #(64, 28, 28)
         output = rnn(b_x)                               # rnn output
